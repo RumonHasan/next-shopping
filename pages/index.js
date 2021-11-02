@@ -8,11 +8,13 @@ import Product from '../models/Product';
 import { useRouter } from 'next/dist/client/router';
 import { Store } from '../utils/store';
 import axios from 'axios';
+import { data } from '../utils/data';
 
 const Home = (props)=> {
   const {products} = props;
   const {state, dispatch} = useContext(Store);
   const router = useRouter();
+  console.log(products);
   // adding to cart frmo index
   const addToCartHandler =  async(product)=>{
     const existItem = state.cart.cartItems.find(item => item._id === product._id);
