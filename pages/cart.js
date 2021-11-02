@@ -13,9 +13,10 @@ import axios from 'axios';
      const {cart} = state;
      console.log(cart.cartItems);
 
+     // adding the items directly to the cart
      const updateCartHandler = async (item, number)=>{
         const { data } = await axios.get(`/api/products/${item._id}`);
-        if(data.countInStock <= 0){
+        if(data.countInStock < number){
             window.alert('product not in stock');
             return;
         }

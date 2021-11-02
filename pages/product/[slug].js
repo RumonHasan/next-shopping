@@ -23,13 +23,13 @@ const ProductScreen = (props) => {
     }
     // clicking the cart 
     const addToClickHandler = async ()=>{
-        const { data } = await axios.get(`/api/products/${product._id}`);
-        if(data.countInStock <= 0){ // checking whether the produc is in stock or not
-            window.alert('Product not in stock');
-            return;
-        }
         const existItem = state.cart.cartItems.find(item => item._id === product._id);
         const quantity = existItem ? existItem.quantity + 1 : 1;
+        const { data } = await axios.get(`/api/products/${product._id}`);
+        if(data.countInStock < quantity){
+            window.alert('Sorry, the product is out of stock');
+            return;
+        }
         dispatch({type: 'CART_ADD_ITEM', payload:{...product, quantity: quantity}});
         router.push('/cart');
     }

@@ -15,13 +15,13 @@ const Home = (props)=> {
   const router = useRouter();
   // adding to cart frmo index
   const addToCartHandler =  async(product)=>{
-    const {data} = await axios.get(`/api/products/${product._id}`);
-    if(data.countInStock <= 0){
-      window.alert('Out of stock');
-      return;
-    }
     const existItem = state.cart.cartItems.find(item => item._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
+    const {data} = await axios.get(`/api/products/${product._id}`);
+    if(data.countInStock < quantity){
+      window.alert('Sorry, the product is out of stock');
+      return;
+    }
     dispatch({type:'CART_ADD_ITEM', payload:{...product, quantity:quantity}})
     router.push('/cart');  
   }
