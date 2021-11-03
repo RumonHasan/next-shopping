@@ -10,6 +10,7 @@ handler.post(async (req, res) => {
   await db.connect();
   const user = await User.findOne({ email: req.body.email });
   await db.disconnect();
+  // comparing the passwords after decrypting them
   if (user && bcrypt.compareSync(req.body.password, user.password)) {
     const token = signToken(user);
     res.send({

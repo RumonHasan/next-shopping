@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Head from 'next/head';
-import { AppBar, Toolbar, Typography, Container, Link, createTheme, ThemeProvider, CssBaseline, Switch, Badge } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Container, Link, createTheme, ThemeProvider, CssBaseline, Switch, Badge, Button, Menu, MenuItem } from '@material-ui/core';
 import useStyles from '../utils/styles';
 import NextLink from 'next/link';
 import { Store } from '../utils/store';
@@ -10,12 +10,16 @@ import Cookies from 'js-cookie';
 const Layout = ({children, title, description}) => {
     const classes = useStyles();
     const {state, dispatch} = useContext(Store);
-    const {darkMode, cart} = state;
+    const {darkMode, cart, userInfo} = state;
     // dark mode change function
     const darkModeChangeHandler = ()=>{
         dispatch({type:darkMode ? 'DARK_MODE_OFF': 'DARK_MODE_ON'});
         const newDarkMode = !darkMode;
         Cookies.set('darkMode', newDarkMode ? 'ON': 'OFF');
+    }
+    // loginmenu close handler
+    const loginMenuCloseHandler = ()=>{
+        
     }
     const theme = createTheme({
         typography:{
@@ -66,9 +70,27 @@ const Layout = ({children, title, description}) => {
                                 {cart.cartItems.length > 0 ? <Badge color='secondary' badgeContent={cart.cartItems.length}>Cart</Badge> : 'cart'}
                             </Link>
                         </NextLink>
-                        <NextLink href='/login' passHref>
+                        {userInfo ? <><Button 
+                        aria-controls='simple-menu'
+                        aria-haspopup = 'true'
+                        onClick={handleClick}
+                        className={classes.navbarBtn}>{userInfo.name}</Button> 
+                               <Menu
+                                id="simple-menu"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={loginMenuCloseHandler}
+                            >
+                            <MenuItem onClick={loginMenuCloseHandler}></MenuItem>
+                        </Menu>
+                        </>
+                        :
+                            <NextLink href='/login' passHref>
                             <Link>Login</Link>
                         </NextLink>
+                        }
+                        
                     </div>
                     </Toolbar>
                 </AppBar>
