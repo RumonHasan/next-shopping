@@ -5,9 +5,11 @@ import useStyles from '../utils/styles';
 import NextLink from 'next/link';
 import { Store } from '../utils/store';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/dist/client/router';
 
 
 const Layout = ({children, title, description}) => {
+    const router = useRouter();
     const classes = useStyles();
     const {state, dispatch} = useContext(Store);
     const {darkMode, cart, userInfo} = state;
@@ -17,9 +19,20 @@ const Layout = ({children, title, description}) => {
         const newDarkMode = !darkMode;
         Cookies.set('darkMode', newDarkMode ? 'ON': 'OFF');
     }
-    // loginmenu close handler
+    // Login menu functions 
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const loginClickHandler = (e) =>{
+        setAnchorEl(e.currentTarget)        
+    }
     const loginMenuCloseHandler = ()=>{
-        
+        setAnchorEl(null);
+    }
+    const logoutClickHandler = ()=>{
+        setAnchorEl(null);
+        dispatch({type: 'USER_LOGOUT'})
+        Cookies.remove('userInfo');
+        Cookies.remove('cartItems');
+        router.push('/');
     }
     const theme = createTheme({
         typography:{
@@ -73,7 +86,7 @@ const Layout = ({children, title, description}) => {
                         {userInfo ? <><Button 
                         aria-controls='simple-menu'
                         aria-haspopup = 'true'
-                        onClick={handleClick}
+                        onClick={loginClickHandler}
                         className={classes.navbarBtn}>{userInfo.name}</Button> 
                                <Menu
                                 id="simple-menu"
@@ -82,7 +95,9 @@ const Layout = ({children, title, description}) => {
                                 open={Boolean(anchorEl)}
                                 onClose={loginMenuCloseHandler}
                             >
-                            <MenuItem onClick={loginMenuCloseHandler}></MenuItem>
+                            <MenuItem onClick={loginMenuCloseHandler}>Profile</MenuItem>
+                            <MenuItem onClick={loginMenuCloseHandler}>Settings</MenuItem>
+                            <MenuItem onClick={logoutClickHandler}>Logout</MenuItem>
                         </Menu>
                         </>
                         :

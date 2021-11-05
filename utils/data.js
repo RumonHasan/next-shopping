@@ -4,19 +4,19 @@ export const data = {
       {
         name: 'Rumon',
         email: 'admin@example.com',
-        password: bcrypt.hashSync('12345'),
+        password: bcrypt.hashSync('123456'),
         isAdmin: true,
       },
       {
         name: 'Ishwor',
         email: 'adminuser@example.com',
-        password: bcrypt.hashSync('12345'),
+        password: bcrypt.hashSync('123456'),
         isAdmin: false,
       }
       ,{
         name: 'James',
         email: 'adminEx@example.com',
-        password: bcrypt.hashSync('12345'),
+        password: bcrypt.hashSync('123456'),
         isAdmin: false,
       }
     ],

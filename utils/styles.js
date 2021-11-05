@@ -31,7 +31,7 @@ const useStyles = makeStyles({
         margin: '0 auto',
     },
     navbarBtn:{
-        color:'#ffffff',
+        color:'white',
         textTransform: 'initial',
     }
 })

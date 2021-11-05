@@ -4,12 +4,12 @@ import { Store } from '../utils/store';
 
 const Shipping = () => {
     const router = useRouter();
-    router.push('/login');
     const {state, dispatch} = useContext(Store);
     const {userInfo} = state;
     // redirecting
     if(!userInfo){
-        router.push('/login?redirect=/shipping');
+        router.push('/login?redirect=/shipping');// all redirects if user is not present goes to shipping
+        // if user does not exist redirect user to login and direct to shipping after loggin
     }
     return (
         <div>
