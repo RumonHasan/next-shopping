@@ -36,7 +36,7 @@ const Login = () => {
             Cookies.set('userInfo', data); // setting the user data to cookies
             router.push(redirect || '/'); // if redirect is null it will jump to homescreen
             // alert('Successful login'); // posting the login info in order to be checked
-        }catch(err){
+        }catch(err){ // using snackbar as warning banners
             enqueueSnackbar(
                 err.response.data ? err.response.data.message : err.message,
                 {

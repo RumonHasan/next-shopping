@@ -3,11 +3,15 @@ import { createContext, useReducer } from "react";
 
 export const Store = createContext();
 
+// stringify conversions in order to parse data
 const userInfoParse = JSON.stringify(Cookies.get('userInfo'));
+const shipAddress = JSON.stringify(Cookies.get('shippingAddress'));
+
 const initialState = {
     darkMode:Cookies.get('darkMode') === 'ON' ? true: false, // getting the user preference frmo the cookie
     cart:{
         cartItems:Cookies.get('cartItems')? JSON.parse(Cookies.get('cartItems')): [],
+        shippingAddress: Cookies.get('shippingAddress') ? JSON.parse(shipAddress): {},
     },
     userInfo: Cookies.get('userInfo')
     ? JSON.parse(userInfoParse)
@@ -46,6 +50,14 @@ const reducer = (state, action)=>{
                 ...state,
                 cart: {...state.cart, cartItems}
             }
+        case 'SAVE_SHIPPING_ADDRESS':
+            return {
+                ...state,
+                cart:{
+                    ...state.cart,
+                    shippingAddress: action.payload
+                }
+            }
         // login
         case 'USER_LOGIN':
             return {
@@ -64,7 +76,7 @@ const reducer = (state, action)=>{
             return state;
     }
 }
-
+// primary store provider for state distribution
 export const StoreProvider = (props)=>{
     const [state, dispatch] = useReducer(reducer, initialState);
     const value = {state, dispatch}; // storing state and dispatch within value
