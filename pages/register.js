@@ -20,7 +20,7 @@ const Register = () => {
     const router = useRouter();
     const {redirect} = router.query; // redirect variable will redirect to the appropriate query
     // login infor
-    const {userInfo} = state; // userInfo
+    const {userInfo} = state; // userInfo checking  
     useEffect(()=>{
         if(userInfo){ // if the user is already logged in... jump back to home
             router.push('/');
@@ -76,7 +76,7 @@ const Register = () => {
                         </Button>
                     </ListItem>
                     <ListItem>
-                        Already Have an Account? <NextLink href={`/login?redirect=${redirect || '/'}`} passHref><Link>Register</Link></NextLink>
+                        Already Have an Account? <NextLink href={`/login?redirect=${redirect || '/'}`} passHref><Link>Login</Link></NextLink>
                     </ListItem>
                 </List>
             </form>

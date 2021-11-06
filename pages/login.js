@@ -8,11 +8,13 @@ import { Store } from '../utils/store';
 import { useRouter } from 'next/dist/client/router';
 import Cookies from 'js-cookie';
 import { useForm, Controller } from 'react-hook-form';
+import { useSnackbar } from 'notistack';
 
 const Login = () => {
     const {handleSubmit, control, formState: {errors}} = useForm();
     const classes = useStyles();
     const {state, dispatch} = useContext(Store);
+    const {enqueueSnackbar, closeSnackbar} = useSnackbar();
     const router = useRouter();
     const {redirect} = router.query; // redirect variable will redirect to the appropriate query
     // login infor
@@ -35,7 +37,12 @@ const Login = () => {
             router.push(redirect || '/'); // if redirect is null it will jump to homescreen
             // alert('Successful login'); // posting the login info in order to be checked
         }catch(err){
-            alert(err.message)
+            enqueueSnackbar(
+                err.response.data ? err.response.data.message : err.message,
+                {
+                    variant:'error'
+                }
+            )
         }
 
     }
