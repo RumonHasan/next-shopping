@@ -6,12 +6,13 @@ export const Store = createContext();
 // stringify conversions in order to parse data
 const userInfoParse = JSON.stringify(Cookies.get('userInfo'));
 const shipAddress = JSON.stringify(Cookies.get('shippingAddress'));
-
+const paymentParse = JSON.stringify(Cookies.get('paymentMethod'));
 const initialState = {
     darkMode:Cookies.get('darkMode') === 'ON' ? true: false, // getting the user preference frmo the cookie
     cart:{
         cartItems:Cookies.get('cartItems')? JSON.parse(Cookies.get('cartItems')): [],
         shippingAddress: Cookies.get('shippingAddress') ? JSON.parse(shipAddress): {},
+        paymentMethod: Cookies.get('paymentMethod') ? JSON.parse(paymentParse): '',
     },
     userInfo: Cookies.get('userInfo')
     ? JSON.parse(userInfoParse)
@@ -56,6 +57,14 @@ const reducer = (state, action)=>{
                 cart:{
                     ...state.cart,
                     shippingAddress: action.payload
+                }
+            }
+        case 'SAVE_PAYMENT_METHOD':
+            return {
+                ...state,
+                cart:{
+                    ...state.cart,
+                    paymentMethod: action.payload,
                 }
             }
         // login

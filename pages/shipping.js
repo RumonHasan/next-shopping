@@ -7,6 +7,7 @@ import { Store } from '../utils/store';
 import { useRouter } from 'next/dist/client/router';
 import Cookies from 'js-cookie';
 import { Controller, useForm } from 'react-hook-form';
+import CheckoutWizard from '../components/checkoutWizard';
 
 const Shipping = () => {
     // react hook form
@@ -22,13 +23,13 @@ const Shipping = () => {
         if(!userInfo){ // if the user is already logged in... jump back to home
             router.push('/login?redirect=/shipping');
         }
+        // set value stores the variable names within the react hook form
         setValue('fullName', shippingAddress.fullName);
         setValue('address', shippingAddress.address);
         setValue('city', shippingAddress.city);
         setValue('postalCode', shippingAddress.postalCode);
         setValue('country', shippingAddress.country);
     },[])
-    console.log(shippingAddress);
   
     // submitting the login information
     const submitHandler = ({fullName, address, city, postalCode, country})=>{
@@ -38,6 +39,7 @@ const Shipping = () => {
     }
     return (
         <Layout title='Shipping'>
+          <CheckoutWizard activeStep={1}/>
             <form onSubmit={handleSubmit(submitHandler)} className={classes.form}>
                 <Typography component='h1' variant='h1'>Shipping</Typography>
                 <List>
