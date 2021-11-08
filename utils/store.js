@@ -6,13 +6,12 @@ export const Store = createContext();
 // stringify conversions in order to parse data
 const userInfoParse = JSON.stringify(Cookies.get('userInfo'));
 const shipAddress = JSON.stringify(Cookies.get('shippingAddress'));
-const paymentParse = JSON.stringify(Cookies.get('paymentMethod'));
 const initialState = {
     darkMode:Cookies.get('darkMode') === 'ON' ? true: false, // getting the user preference frmo the cookie
     cart:{
         cartItems:Cookies.get('cartItems')? JSON.parse(Cookies.get('cartItems')): [],
         shippingAddress: Cookies.get('shippingAddress') ? JSON.parse(shipAddress): {},
-        paymentMethod: Cookies.get('paymentMethod') ? JSON.parse(paymentParse): '',
+        paymentMethod: Cookies.get('paymentMethod') ? Cookies.get('paymentMethod'): '',
     },
     userInfo: Cookies.get('userInfo')
     ? JSON.parse(userInfoParse)

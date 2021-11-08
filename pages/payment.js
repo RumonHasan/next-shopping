@@ -6,7 +6,7 @@ import Layout from '../components/Layout';
 import CheckoutWizard from '../components/checkoutWizard';
 import { useSnackbar } from 'notistack';
 import useStyles from '../utils/styles';
-import { Typography, List, ListItem, FormControl, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
+import { Typography, List, ListItem, FormControl,Button, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 
 const Payment = () => {
     const classes = useStyles();
@@ -53,12 +53,34 @@ const Payment = () => {
                                         value='stripe'
                                         control={<Radio/>}>
                                     </FormControlLabel>
+                                    <FormControlLabel
+                                        label='Paypal'
+                                        value='Paypal'
+                                        control={<Radio/>}>
+                                    </FormControlLabel>
+                                <FormControlLabel
+                                    label='Cash'
+                                    value='Cash'
+                                    control={<Radio/>}>
+                                    </FormControlLabel>
                             </RadioGroup>
                         </FormControl>
                     </ListItem>
                     <ListItem>
-
+                        <Button fullWidth type="submit" variant="contained" color="primary">
+                            Continue
+                        </Button>
                     </ListItem>
+          <ListItem>
+                <Button
+                fullWidth
+                type="button"
+                variant="contained"
+                onClick={() => router.push('/shipping')}
+                >
+                    Back
+                </Button>
+          </ListItem>
                 </List>
             </form>
         </Layout>
